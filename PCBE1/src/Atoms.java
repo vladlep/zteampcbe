@@ -9,9 +9,6 @@ public class Atoms extends ChemicalEntity {
 		this.name = name;
 	}
 
-
-	
-	
 	public synchronized void stopThread()
 	{
 		canMoveFlag = false;
@@ -30,5 +27,11 @@ public class Atoms extends ChemicalEntity {
 	
 		return name;
 
+	}
+
+	@Override
+	public int getValence() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
