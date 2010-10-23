@@ -33,11 +33,43 @@ public class MovementSpace {
 				{
 				space.get(newPosition.getX()).set(newPosition.getY(),	space.get(currentPosition.getX()).get(currentPosition.getY()));
 				space.get(currentPosition.getX()).set(currentPosition.getY(),null);
+				//calculate if reactions with near cells is possible and do { ...}while posible
 				}
 			return newPosition; 	
 			}
-	
+			else
+			{
+			if(mergePossible(currentPosition,newPosition))
+			{
+				System.out.println("2 atoms merged");
+				ChemicalEntity temp = space.get(newPosition.getX()).get(newPosition.getY());
+				Molecules newMolec = new Molecules(newPosition);
+				temp.pauseThread();
+				newMolec.addToMolecule(temp);
+				
+				temp = space.get(currentPosition.getX()).get(currentPosition.getY());
+				temp.pauseThread();
+				newMolec.addToMolecule(temp);
+				
+				space.get(currentPosition.getX()).set(currentPosition.getY(),null);
+				space.get(newPosition.getX()).set(newPosition.getY(), newMolec);
+				newMolec.start();
+				
+				return newPosition;
+			}
+			
+				//if merge possible move to cell and after 
+				//calculate if reactions with near cells is possible and do { ...}while posible
+			
+			}
 		return null;
+	}
+	
+//	calculate if merge possible
+	private synchronized boolean mergePossible(Position currentPosition, Position newPosition) 
+	{
+	
+		return true;
 	}
 
 	public synchronized void printSpace() {
