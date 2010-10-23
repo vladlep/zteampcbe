@@ -17,7 +17,14 @@ public class Position {
 		return y;
 	}
 	
+	public String toString() {
+			return "x="+x+" y="+y;
+	}
 	
-	
-	
+	public boolean equals(Object obj) {
+		if( obj instanceof Position)
+		 if(((Position)obj).x == this.x && ((Position)obj).y == this.y )
+			 return true;
+		return false;
+	}
 }
