@@ -3,14 +3,48 @@ import javax.crypto.spec.PSource;
 
 public abstract class ChemicalEntity extends Thread{
 
-	protected Position currentPosition;
-	protected MovementSpace space;
-
+	private MovementSpace mvSpace; 
+	private Position currentPosition;
+	
 	public ChemicalEntity(Position currentPosition)
 	{
 		this.currentPosition = currentPosition;
 	}
 
-	public abstract void run();
+	public void run() 
+	{
+		mvSpace= MovementSpace.getMovementSpace();
+		while (true )
+		{
+
+			synchronized (this) {
+				while(canMove())	
+				{
+					mvSpace.moveInSpace(currentPosition, generatePosition());
+					try {
+						sleep(600);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private synchronized Position generatePosition() // shouldn't be sync?
+	{
+		int differenceOnX = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
+		int differenceOnY = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
+
+		return new Position(currentPosition.getX()+differenceOnX, currentPosition.getY()+differenceOnY);
+	}
 	
+	public abstract boolean canMove();
+	public  abstract  void stopThread();
+	public abstract void startThread();
 }
