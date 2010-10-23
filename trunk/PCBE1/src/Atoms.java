@@ -25,7 +25,7 @@ public class Atoms extends ChemicalEntity {
 	
 	public String toString() {
 	
-		return name;
+		return name+super.toString();
 
 	}
 

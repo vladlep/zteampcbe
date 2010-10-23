@@ -7,18 +7,26 @@ public abstract class ChemicalEntity extends Thread {
 
 	public ChemicalEntity(Position currentPosition) {
 		this.currentPosition = currentPosition;
+		mvSpace = MovementSpace.getMovementSpace();
+		mvSpace.addAtom(this,currentPosition);
 	}
 
 	public void run() {
-		mvSpace = MovementSpace.getMovementSpace();
+
 		while (true) {
 
 			synchronized (this) {
 				while (canMove()) {
-					if (!mvSpace.moveInSpace(currentPosition,
-							generatePosition()))
-						System.out
-								.println("couldn't move in space. It is ocupied.");
+					Position newPosition =generatePosition();
+					Position retPosition = mvSpace.moveInSpace(currentPosition,newPosition);
+					if(retPosition == null)
+						System.out.println(toString()+"couldn't move in space: "+newPosition.toString());
+					else 
+						{
+						currentPosition = retPosition;
+						System.out.println(toString()+"moved to: "+retPosition.toString());
+						mvSpace.printSpace();
+						}
 					try {
 						sleep(600);
 					} catch (InterruptedException e) {
@@ -36,11 +44,14 @@ public abstract class ChemicalEntity extends Thread {
 
 	private synchronized Position generatePosition() // shouldn't be sync?
 	{
-		int differenceOnX = (int) (Math.random() * 3 - 1); // can be -1, 0 or 1
-		int differenceOnY = (int) (Math.random() * 3 - 1); // can be -1, 0 or 1
-
-		return new Position(currentPosition.getX() + differenceOnX,
-				currentPosition.getY() + differenceOnY);
+		Position newPosition ;
+		do{
+			int differenceOnX = (int) (Math.random() * 3 )- 1; // can be -1, 0 or 1
+			int differenceOnY = (int) (Math.random() * 3 )- 1; // can be -1, 0 or 1
+			newPosition = new Position(currentPosition.getX() + differenceOnX,	currentPosition.getY() + differenceOnY);
+		}while(currentPosition.equals(newPosition)); //shouldn't generate the same position 
+//			System.out.println(newPosition.toString());	
+		return newPosition;
 	}
 
 	public abstract boolean canMove();
@@ -51,4 +62,9 @@ public abstract class ChemicalEntity extends Thread {
 
 	public abstract void startThread();
 
+	@Override
+	public String toString() {
+
+		return "("+currentPosition.getX()+","+currentPosition.getY()+")";
+	}
 }
