@@ -4,7 +4,8 @@ public abstract class ChemicalEntity extends Thread {
 
 	private MovementSpace mvSpace;
 	private Position currentPosition;
-
+	private boolean keepThreadAliveFlag= true;
+	
 	public ChemicalEntity(Position currentPosition) {
 		this.currentPosition = currentPosition;
 		mvSpace = MovementSpace.getMovementSpace();
@@ -13,20 +14,21 @@ public abstract class ChemicalEntity extends Thread {
 
 	public void run() {
 
-		while (true) {
+		while (keepThreadAliveFlag) {
 
 			synchronized (this) {
 				while (canMove()) {
 					Position newPosition =generatePosition();
 					Position retPosition = mvSpace.moveInSpace(currentPosition,newPosition);
 					if(retPosition == null)
-						System.out.println(toString()+"couldn't move in space: "+newPosition.toString());
+						System.out.println(toString()+this.getId()+"couldn't move in space: "+newPosition.toString());
 					else 
-						{
-						System.out.println(toString()+"moved to: "+retPosition.toString());
-						currentPosition = retPosition;
+					{
+						System.out.println(toString()+this.getId()+" moved to: "+retPosition.toString());
+						setCurentPosition(retPosition);
+//						currentPosition = retPosition;
 						mvSpace.printSpace();
-						}
+					}
 					try {
 						sleep(600);
 					} catch (InterruptedException e) {
@@ -50,7 +52,7 @@ public abstract class ChemicalEntity extends Thread {
 			int differenceOnY = (int) (Math.random() * 3 )- 1; // can be -1, 0 or 1
 			newPosition = new Position(currentPosition.getX() + differenceOnX,	currentPosition.getY() + differenceOnY);
 		}while(currentPosition.equals(newPosition)); //shouldn't generate the same position 
-//			System.out.println(newPosition.toString());	
+
 		return newPosition;
 	}
 
@@ -58,13 +60,25 @@ public abstract class ChemicalEntity extends Thread {
 
 	public abstract int getValence();
 
-	public abstract void stopThread();
+	public abstract void pauseThread();
 
 	public abstract void startThread();
 
-	@Override
+	public void stopThread()
+	{
+		keepThreadAliveFlag = false;
+	}
 	public String toString() {
 
 		return "("+currentPosition.getX()+","+currentPosition.getY()+")";
 	}
+
+	/**
+	 * when fee-in moleculs we need this method to set thei position to the new one. 
+	 */
+	public void setCurentPosition(Position newPosition)
+	{
+		 currentPosition = newPosition;
+	}
+
 }

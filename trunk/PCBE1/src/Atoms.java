@@ -9,7 +9,7 @@ public class Atoms extends ChemicalEntity {
 		this.name = name;
 	}
 
-	public synchronized void stopThread()
+	public synchronized void pauseThread()
 	{
 		canMoveFlag = false;
 	}
@@ -34,4 +34,5 @@ public class Atoms extends ChemicalEntity {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 }
