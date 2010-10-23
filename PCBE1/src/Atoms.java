@@ -1,34 +1,34 @@
 
 public class Atoms extends ChemicalEntity {
 
-	private MovementSpace mvSpace; 
-	private Position currentPosition;
-
-	public  Atoms(Position currentPosition)
+	private String name;
+	private boolean canMoveFlag = true; // it's sayt that this thread can move
+	public  Atoms(Position currentPosition, String name)
 	{
 		super(currentPosition);
-
+		this.name = name;
 	}
 
 
-	public void run() 
+	
+	
+	public synchronized void stopThread()
 	{
-		space = MovementSpace.getMovementSpace();
-		while (true )
-		{
-
-			
-			mvSpace.moveInSpace(currentPosition, generatePosition());
-
-		}
+		canMoveFlag = false;
 	}
-
-	private synchronized Position generatePosition() // shouldn't be sync?
+	public synchronized void startThread()
 	{
-		int differenceOnX = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
-		int differenceOnY = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
-			
-		return new Position(currentPosition.getX()+differenceOnX, currentPosition.getY()+differenceOnY);
+		canMoveFlag = true;
+	}
+	
+	public boolean canMove() {
+		
+		return canMoveFlag;
+	}
+	
+	public String toString() {
+	
+		return name;
 
 	}
 }
