@@ -1,14 +1,16 @@
+import javax.crypto.spec.PSource;
 
-public class ChemicalEntity {
 
-	private int positionOnX;
-	private int positionOnY;
+public abstract class ChemicalEntity extends Thread{
 
-	public ChemicalEntity(int positionOnx, int positionOnY)
+	protected Position currentPosition;
+	protected MovementSpace space;
+
+	public ChemicalEntity(Position currentPosition)
 	{
-		this.positionOnX = positionOnx;
-		this.positionOnY = positionOnY;
+		this.currentPosition = currentPosition;
 	}
-	
+
+	public abstract void run();
 	
 }

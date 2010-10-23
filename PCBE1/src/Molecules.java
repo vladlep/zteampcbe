@@ -1,9 +1,10 @@
 
-public class Molecules extends ChemicalEntity{
+public class Molecules extends ChemicalEntity {
 
-	public Molecules(int positionOnx, int positionOnY)
+	
+	public Molecules(Position currentPosition)
 	{
-		super(positionOnx, positionOnY);
+		super(currentPosition);
 		
 	}
 	
@@ -11,6 +12,17 @@ public class Molecules extends ChemicalEntity{
 	public String toString() {
 	
 	return "";
+	}
+
+
+	
+	public void run() {
+		
+		while (true)
+		{
+			
+		}
+		
 	}
 	
 }
