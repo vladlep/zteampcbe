@@ -23,8 +23,8 @@ public abstract class ChemicalEntity extends Thread {
 						System.out.println(toString()+"couldn't move in space: "+newPosition.toString());
 					else 
 						{
-						currentPosition = retPosition;
 						System.out.println(toString()+"moved to: "+retPosition.toString());
+						currentPosition = retPosition;
 						mvSpace.printSpace();
 						}
 					try {
