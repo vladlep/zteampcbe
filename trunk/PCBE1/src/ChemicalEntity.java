@@ -1,26 +1,24 @@
 import javax.crypto.spec.PSource;
 
+public abstract class ChemicalEntity extends Thread {
 
-public abstract class ChemicalEntity extends Thread{
-
-	private MovementSpace mvSpace; 
+	private MovementSpace mvSpace;
 	private Position currentPosition;
-	
-	public ChemicalEntity(Position currentPosition)
-	{
+
+	public ChemicalEntity(Position currentPosition) {
 		this.currentPosition = currentPosition;
 	}
 
-	public void run() 
-	{
-		mvSpace= MovementSpace.getMovementSpace();
-		while (true )
-		{
+	public void run() {
+		mvSpace = MovementSpace.getMovementSpace();
+		while (true) {
 
 			synchronized (this) {
-				while(canMove())	
-				{
-					mvSpace.moveInSpace(currentPosition, generatePosition());
+				while (canMove()) {
+					if (!mvSpace.moveInSpace(currentPosition,
+							generatePosition()))
+						System.out
+								.println("couldn't move in space. It is ocupied.");
 					try {
 						sleep(600);
 					} catch (InterruptedException e) {
@@ -38,13 +36,19 @@ public abstract class ChemicalEntity extends Thread{
 
 	private synchronized Position generatePosition() // shouldn't be sync?
 	{
-		int differenceOnX = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
-		int differenceOnY = (int)(Math.random() * 3 -1); // can be -1, 0 or 1
+		int differenceOnX = (int) (Math.random() * 3 - 1); // can be -1, 0 or 1
+		int differenceOnY = (int) (Math.random() * 3 - 1); // can be -1, 0 or 1
 
-		return new Position(currentPosition.getX()+differenceOnX, currentPosition.getY()+differenceOnY);
+		return new Position(currentPosition.getX() + differenceOnX,
+				currentPosition.getY() + differenceOnY);
 	}
-	
+
 	public abstract boolean canMove();
-	public  abstract  void stopThread();
+
+	public abstract int getValence();
+
+	public abstract void stopThread();
+
 	public abstract void startThread();
+
 }

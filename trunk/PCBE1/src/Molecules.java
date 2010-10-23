@@ -5,6 +5,7 @@ public class Molecules extends ChemicalEntity {
 
 	private boolean canMoveFlag = true;
 	private Vector<ChemicalEntity> containedAtoms;
+	private int valene; 
 	
 	public Molecules(Position currentPosition)
 	{
@@ -46,5 +47,20 @@ public class Molecules extends ChemicalEntity {
 		// TODO Auto-generated method stub
 		
 	}
+	/**
+	 *  - add the entity to molecule and stops it's thread. 
+	 */
+	public void addToMolecule()
+	{
 	
+	}
+
+
+	@Override
+	public int getValence() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	//TODO. create a spilt mothod that removes a chemicalentity form the list and start's it thread
 }
