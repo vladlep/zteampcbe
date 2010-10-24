@@ -5,7 +5,7 @@ public abstract class ChemicalEntity extends Thread {
 	private MovementSpace mvSpace;
 	private Position currentPosition;
 	private boolean keepThreadAliveFlag= true;
-	
+
 	public ChemicalEntity(Position currentPosition) {
 		this.currentPosition = currentPosition;
 		mvSpace = MovementSpace.getMovementSpace();
@@ -26,7 +26,7 @@ public abstract class ChemicalEntity extends Thread {
 					{
 						System.out.println(toString()+this.getId()+" moved to: "+retPosition.toString());
 						setCurentPosition(retPosition);
-//						currentPosition = retPosition;
+						//						currentPosition = retPosition;
 						mvSpace.printSpace();
 					}
 					try {
@@ -35,11 +35,12 @@ public abstract class ChemicalEntity extends Thread {
 						e.printStackTrace();
 					}
 				}
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				if(keepThreadAliveFlag)
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 			}
 		}
 	}
@@ -78,7 +79,7 @@ public abstract class ChemicalEntity extends Thread {
 	 */
 	public void setCurentPosition(Position newPosition)
 	{
-		 currentPosition = newPosition;
+		currentPosition = newPosition;
 	}
 
 }
