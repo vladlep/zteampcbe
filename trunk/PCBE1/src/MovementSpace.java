@@ -4,12 +4,10 @@ import java.util.Vector;
 public class MovementSpace {
 	private Vector<Vector<ChemicalEntity>> space = null;
 	private static MovementSpace movementSpace = null;
-	private int lengthOx;
-	private int lengthOy;
+	public static int  lengthOx =10;
+	public static int lengthOy = 20;
 
-	public MovementSpace(int lengthOx, int lengthOy) {
-		this.lengthOx = lengthOx;
-		this.lengthOy = lengthOy;
+	private MovementSpace() {
 		space = new Vector<Vector<ChemicalEntity>>(lengthOx);
 		for (int i = 0; i < lengthOx; i++)
 			{
@@ -18,7 +16,7 @@ public class MovementSpace {
 				space.get(i).add(null);
 			}
 			
-		this.movementSpace = this;
+		MovementSpace.movementSpace = this;
 	}
 
 	/**
@@ -32,6 +30,7 @@ public class MovementSpace {
 			if (emptySpace(newPosition)) {
 				{
 				space.get(newPosition.getX()).set(newPosition.getY(),	space.get(currentPosition.getX()).get(currentPosition.getY()));
+				
 				space.get(currentPosition.getX()).set(currentPosition.getY(),null);
 				//calculate if reactions with near cells is possible and do { ...}while posible
 				}
@@ -44,17 +43,22 @@ public class MovementSpace {
 				System.out.println("2 atoms merged");
 				ChemicalEntity temp = space.get(newPosition.getX()).get(newPosition.getY());
 				Molecules newMolec = new Molecules(newPosition);
+				temp.setCurentPosition(newPosition);
 				temp.pauseThread();
 				newMolec.addToMolecule(temp);
 				
 				temp = space.get(currentPosition.getX()).get(currentPosition.getY());
+//				System.out.println("poz curenta"+currentPosition);
+
+//				System.out.println("val obt la poz"+temp);
 				temp.pauseThread();
 				newMolec.addToMolecule(temp);
 				
 				space.get(currentPosition.getX()).set(currentPosition.getY(),null);
 				space.get(newPosition.getX()).set(newPosition.getY(), newMolec);
+//				System.out.println("new molecule "+newMolec);
 				newMolec.start();
-				
+			
 				return newPosition;
 			}
 			
@@ -93,7 +97,7 @@ public class MovementSpace {
 
 	public static MovementSpace getMovementSpace() {
 		if (movementSpace == null)
-			movementSpace = new MovementSpace(100, 100);
+			movementSpace = new MovementSpace();
 		return movementSpace;
 	}
 	public boolean validPosition(Position p)

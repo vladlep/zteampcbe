@@ -11,6 +11,7 @@ public class Atoms extends ChemicalEntity {
 
 	public synchronized void pauseThread()
 	{
+		System.out.println(toString() +" is beeing paused");
 		canMoveFlag = false;
 	}
 	public synchronized void startThread()
@@ -18,7 +19,7 @@ public class Atoms extends ChemicalEntity {
 		canMoveFlag = true;
 	}
 	
-	public boolean canMove() {
+	public synchronized boolean canMove() {
 		
 		return canMoveFlag;
 	}
