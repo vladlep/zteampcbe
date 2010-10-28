@@ -13,9 +13,9 @@ public class Molecules extends ChemicalEntity {
 		containedAtoms = new Vector<ChemicalEntity>();
 	}
 
-
+	@Override
 	public String toString() {
-		String str= "";
+		String str= ""; //+super.toString();
 		for ( int i=0; i<containedAtoms.size(); i++)
 		{
 			str = str + containedAtoms.get(i).toString() + " ";
@@ -48,7 +48,7 @@ public class Molecules extends ChemicalEntity {
 	public void pauseThread() {
 		for ( int i=0 ; i<containedAtoms.size(); i++ )
 			containedAtoms.get(i).pauseThread();
-
+		canMoveFlag = false;
 	}
 	/**
 	 *  - add the entity to molecule and stops it's thread. 
@@ -64,6 +64,7 @@ public class Molecules extends ChemicalEntity {
 		return 0;
 	}
 	
+	@Override
 	public void setCurentPosition(Position newPosition)
 	{
 		super.setCurentPosition(newPosition);

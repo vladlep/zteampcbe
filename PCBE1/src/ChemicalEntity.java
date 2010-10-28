@@ -17,31 +17,34 @@ public abstract class ChemicalEntity extends Thread {
 		while (keepThreadAliveFlag) {
 
 			synchronized (this) {
-				while (canMove()) {
-					Position newPosition =generatePosition();
-					Position retPosition = mvSpace.moveInSpace(currentPosition,newPosition);
-					if(retPosition == null)
-						System.out.println(toString()+this.getId()+"couldn't move in space: "+newPosition.toString());
-					else 
-					{
-						System.out.println(toString()+this.getId()+" moved to: "+retPosition.toString());
-						setCurentPosition(retPosition);
-						//						currentPosition = retPosition;
-						mvSpace.printSpace();
-					}
+			
+				while(!canMove())// || keepThreadAliveFlag)
 					try {
-						sleep(600);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				if(keepThreadAliveFlag)
-					try {
+						System.out.println("i'm in wait"+this.getId()+" "+ this.toString());
 						wait();
+						System.out.println("out of wait");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 			}
+
+			Position newPosition =generatePosition();
+			Position retPosition = mvSpace.moveInSpace(currentPosition,newPosition);
+			if(retPosition == null)
+				System.out.println(toString()+this.getId()+"couldn't move in space: "+newPosition.toString());
+			else 
+			{
+				System.out.println(toString()+this.getId()+" moved to: "+retPosition.toString());
+				setCurentPosition(retPosition);
+				//						currentPosition = retPosition;
+				mvSpace.printSpace();
+			}
+			try {
+				sleep(600);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 
@@ -79,7 +82,7 @@ public abstract class ChemicalEntity extends Thread {
 	 */
 	public void setCurentPosition(Position newPosition)
 	{
-		currentPosition = newPosition;
+		this.currentPosition = newPosition;
 	}
 
 }
