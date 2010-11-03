@@ -13,7 +13,6 @@ public class Molecules extends ChemicalEntity {
 		
 	}
 	
-	
 	public String toString() {
 	String str= "";
 		for ( int i=0; i<containedAtoms.size(); i++)
@@ -23,10 +22,6 @@ public class Molecules extends ChemicalEntity {
 		
 	return "";
 	}
-	
-	
-
-
 
 	public boolean canMove() 
 	{
@@ -34,13 +29,11 @@ public class Molecules extends ChemicalEntity {
 		return canMoveFlag;
 	}
 
-
 	@Override
 	public void startThread() {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void stopThread() {
@@ -55,12 +48,11 @@ public class Molecules extends ChemicalEntity {
 	
 	}
 
-
 	@Override
 	public int getValence() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
-	//TODO. create a spilt mothod that removes a chemicalentity form the list and start's it thread
+	//TODO. create a split method that removes a chemicalentity form the list and start's it thread
 }
