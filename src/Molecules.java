@@ -5,7 +5,7 @@ public class Molecules extends ChemicalEntity {
 
 	private boolean canMoveFlag = true;
 	private Vector<ChemicalEntity> containedAtoms;
-	private int valene; 
+	private int valence;
 	
 	public Molecules(Position currentPosition)
 	{

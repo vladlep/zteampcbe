@@ -1,6 +1,4 @@
-import java.util.Collections;
 import java.util.Vector;
-
 
 public class Atoms extends ChemicalEntity {
 
@@ -78,9 +76,42 @@ public class Atoms extends ChemicalEntity {
 		return force;
 	}
 	
+	/*
+	 * When an atom encounters an atom they will 
+	 * try to combine if: The sum of the 'electrons'
+	 * don't exceed the maximum.
+	 */
+	public boolean combine(Atoms atom)
+	{
+		Vector<Integer> aux = new Vector<Integer>(OccLayer.size());
+		for (int i = 0; i < aux.size(); ++i)
+		{
+			aux.add(i, OccLayerNow.get(i) + atom.OccLayerNow.get(i));
+			if ((aux.get(i) >= MaxLayer.get(i)) || (aux.get(i) >= atom.MaxLayer.get(i)))
+				return false;
+		}
+		copyVector(OccLayerNow, aux);
+		copyVector(atom.OccLayerNow, aux);
+		return true;
+	}
+	
+	/*
+	 * For the molecule the atom may try one time
+	 * with a random atom of the molecule.
+	 */
+	public boolean combine(Molecules molecule)
+	{
+		return true;
+	}
 	@Override
 	public int getValence() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	public void copyVector(Vector<Integer> src, Vector<Integer> org)
+	{
+		int size = src.size();
+		for (int i = 0; i < size; ++i)
+			src.add(i, org.get(i));
 	}
 }
