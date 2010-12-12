@@ -137,8 +137,35 @@ public class Publisher extends Subscriber {
 
         //daca msg e de tip published il adaug in lista de mesaje published.
         if (newsContent.getNewsAttributes().getType().equals(NewsSelector.NEWS_TYPES[0])) {
-            publishedNews.add(newsContent);
+            {
+                if (publishedNews.contains(newsContent)) {
+                    PubFrame.throwErrorMessage("Duplicate Message. You can have only one message with the same title.");
+                    return; //don't add it to the que.
+                }
+                publishedNews.add(newsContent);
+                System.out.println("\nNew published messages list :\n ");
+               System.out.println(publishedNews.toString());
+     
+            }
+            
         }
+        String dataPub ="";
+         if (newsContent.getNewsAttributes().getType().equals(NewsSelector.NEWS_TYPES[1]) ||newsContent.getNewsAttributes().getType().equals(NewsSelector.NEWS_TYPES[2]) )
+         {
+             if (!publishedNews.contains(newsContent)) {
+                    PubFrame.throwErrorMessage("News wasn't published. You can't alter a new that was not published yet.");
+                    return; //don't add it to the que.
+                }
+             int index = publishedNews.indexOf(newsContent);
+             
+             NewsContent thePubNews =  publishedNews.get(index);
+             dataPub="First published on :";
+             dataPub =dataPub+ thePubNews.getNewsAttributes().getFirstPublished().toString();
+             dataPub=dataPub+"\n";
+             //setez data modificarii diferita de cea a publicareii
+             thePubNews.getNewsAttributes().setLastModified(newsContent.getNewsAttributes().getFirstPublished());
+         }
+
         Message msg1;
         try {
             msg1 = this.createMessage(newsContent.getNewsAttributes().getAuthor(),
@@ -148,7 +175,7 @@ public class Publisher extends Subscriber {
                     newsContent.getNewsAttributes().getSource(),
                     newsContent.getNewsAttributes().getTitle(),
                     newsContent.getNewsAttributes().getType(),
-                    newsContent.getNewsText());
+                    dataPub+newsContent.getNewsText());
             this.topicPublisher.publish(msg1);
         } catch (JMSException e) {
             // TODO Auto-generated catch block

@@ -11,12 +11,15 @@
 
 package news;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author raptor
  */
 public class PubFrame extends javax.swing.JFrame {
-    
+    private static JFrame frame;
     private Publisher owner;
 
     /** Creates new form SubFrame */
@@ -40,6 +43,7 @@ public class PubFrame extends javax.swing.JFrame {
         for(int i = 0; i < NewsSelector.NEWS_TYPES.length - 1; i++) {
             this.jComboBox4.addItem(NewsSelector.NEWS_TYPES[i]);
         }
+        frame = this;
     }
 
     public void appendText(String text) {
@@ -374,6 +378,10 @@ public class PubFrame extends javax.swing.JFrame {
         this.owner.finish();
     }//GEN-LAST:event_jButton5MouseReleased
 
+    public static void throwErrorMessage(String text)
+    {
+        JOptionPane.showMessageDialog(frame, text);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
