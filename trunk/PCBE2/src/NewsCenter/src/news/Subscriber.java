@@ -47,7 +47,7 @@ public class Subscriber extends Thread{
 			}
 	
 			try {
-				if(!msg.getStringProperty("NewsType").equals(NewsSelector.NEWS_TYPES[2])) {
+				if(!msg.getStringProperty("NewsType").equals(NewsSelector.NEWS_TYPES[2]) && !msg.getStringProperty("NewsType").equals(NewsSelector.NEWS_TYPES[3])) {
 					
 					Message readNews = this.copyMessageProps(msg);
 					readNews.setStringProperty("NewsType",NewsSelector.NEWS_TYPES[3]);	
