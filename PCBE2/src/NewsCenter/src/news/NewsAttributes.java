@@ -89,7 +89,7 @@ public class NewsAttributes {
 		}
 		if(this.domain != null) {
 			
-			attr = attr.concat("NewsDomain = '" + this.domain + "' AND ");
+			attr = attr.concat("NewsDomain LIKE '" + this.domain + "%' AND ");
 		}
 		if(this.author != null) {
 			
