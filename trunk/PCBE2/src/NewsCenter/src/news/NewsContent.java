@@ -27,6 +27,18 @@ public class NewsContent {
 		this.newsAttributes = newsAttributes;
 	}
 	
-	
+	public boolean equals(Object object)
+        {
+         if(object instanceof NewsContent)
+             if(((NewsContent)object).getNewsAttributes().getTitle().equals(this.newsAttributes.getTitle()))
+                 return true;
+        return false;
+        }
 
+        public String toString()
+        {
+            String temp ="";
+            temp = temp + newsText+"; "+newsAttributes.toString();
+            return temp;
+        }
 }

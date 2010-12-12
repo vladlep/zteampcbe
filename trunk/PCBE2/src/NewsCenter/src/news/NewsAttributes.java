@@ -117,4 +117,8 @@ public class NewsAttributes {
 		
 		return attr;
 	}
+        public String toString()
+        {
+         return getSQLSyntaxAttributes()+"\n";
+        }
 }
