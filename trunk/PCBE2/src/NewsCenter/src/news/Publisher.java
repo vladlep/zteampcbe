@@ -111,7 +111,7 @@ public class Publisher extends Subscriber {
 
         Message msg;
 
-        // TODO check null parameters
+    
 
         if (type.equals(NewsSelector.NEWS_TYPES[3])) {
 
